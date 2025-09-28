@@ -13,13 +13,18 @@ import {
   Clock,
   Eye,
   Edit,
-  Trash2
+  Trash2,
+  FileText,
+  LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import VendorManagement from "@/components/admin/VendorManagement";
+import ContentManagement from "@/components/admin/ContentManagement";
+import UserManagement from "@/components/admin/UserManagement";
 
 const AdminDashboard = () => {
   const [pendingVendors] = useState([
@@ -71,6 +76,10 @@ const AdminDashboard = () => {
                 Vendor Management
               </Button>
               <Button variant="ghost" className="w-full justify-start">
+                <FileText className="w-4 h-4 mr-3" />
+                Content Management
+              </Button>
+              <Button variant="ghost" className="w-full justify-start">
                 <DollarSign className="w-4 h-4 mr-3" />
                 Payments
               </Button>
@@ -83,6 +92,13 @@ const AdminDashboard = () => {
                 Settings
               </Button>
             </nav>
+
+            <div className="absolute bottom-6 left-6 right-6">
+              <Button variant="outline" className="w-full justify-start">
+                <LogOut className="w-4 h-4 mr-3" />
+                Logout
+              </Button>
+            </div>
           </div>
         </aside>
 
@@ -125,10 +141,11 @@ const AdminDashboard = () => {
 
           {/* Main Tabs */}
           <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList className="grid grid-cols-5 w-fit">
+            <TabsList className="grid grid-cols-6 w-fit">
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="vendors">Vendors</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>
+              <TabsTrigger value="content">Content</TabsTrigger>
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
               <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
@@ -195,62 +212,15 @@ const AdminDashboard = () => {
             </TabsContent>
 
             <TabsContent value="vendors">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Vendor Management</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Vendor Name</TableHead>
-                        <TableHead>Type</TableHead>
-                        <TableHead>Location</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {pendingVendors.map((vendor) => (
-                        <TableRow key={vendor.id}>
-                          <TableCell className="font-medium">{vendor.name}</TableCell>
-                          <TableCell>{vendor.type}</TableCell>
-                          <TableCell>{vendor.location}</TableCell>
-                          <TableCell>
-                            <Badge variant="secondary" className="capitalize">
-                              {vendor.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex space-x-2">
-                              <Button size="sm" variant="ghost">
-                                <Eye className="w-4 h-4" />
-                              </Button>
-                              <Button size="sm" variant="ghost">
-                                <Edit className="w-4 h-4" />
-                              </Button>
-                              <Button size="sm" variant="ghost">
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
+              <VendorManagement />
             </TabsContent>
 
             <TabsContent value="users">
-              <Card>
-                <CardHeader>
-                  <CardTitle>User Management</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">User management interface would go here...</p>
-                </CardContent>
-              </Card>
+              <UserManagement />
+            </TabsContent>
+
+            <TabsContent value="content">
+              <ContentManagement />
             </TabsContent>
 
             <TabsContent value="analytics">
